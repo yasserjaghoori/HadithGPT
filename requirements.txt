@@ -1,4 +1,4 @@
-# HadithGPT Dependencies
+# HadithGPT Dependencies - Pinned for Vercel compatibility
 
 # FastAPI (Production API)
 fastapi==0.109.0
@@ -6,21 +6,23 @@ uvicorn[standard]==0.27.0
 pydantic==2.5.3
 pydantic-settings==2.1.0
 
-# OpenAI
-openai>=1.0.0
+# OpenAI - PINNED to avoid proxies compatibility issues
+openai==1.12.0
 
-# Pinecone
-pinecone>=5.0.0
+# Pinecone - PINNED to avoid compatibility issues  
+pinecone-client==3.0.2
+
+# HTTPX - explicitly pinned to compatible version
+httpx==0.26.0
 
 # Supabase (Database & Auth)
 supabase==2.3.0
 postgrest==0.13.0
 
 # Flask (Legacy web app - can remove later)
-flask>=2.0.0
+flask==3.0.0
 
 # Utilities
 python-dotenv==1.0.0
 python-multipart==0.0.6
 requests==2.31.0
-
