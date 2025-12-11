@@ -73,14 +73,6 @@ export default function ChatMessage({ message }: ChatMessageProps) {
           }`}
         >
           <p className="whitespace-pre-wrap">{message.content}</p>
-
-          {/* Enhanced Query Debug Info (Optional) */}
-          {message.metadata?.enhanced_query && (
-            <details className="mt-2 text-xs opacity-70">
-              <summary className="cursor-pointer hover:opacity-100">Enhanced Query</summary>
-              <p className="mt-1 font-mono">{message.metadata.enhanced_query}</p>
-            </details>
-          )}
         </div>
 
         {/* Hadith Results (with clusters if available) */}
