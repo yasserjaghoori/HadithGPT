@@ -6,8 +6,6 @@ interface HadithCardProps {
 }
 
 export default function HadithCard({ hadith, rank }: HadithCardProps) {
-  const similarityPercent = Math.round(hadith.score * 100);
-
   // Extract collection name (e.g., "hadith-bukhari" -> "Bukhari")
   const collectionName = hadith.collection
     ? hadith.collection
@@ -35,17 +33,6 @@ export default function HadithCard({ hadith, rank }: HadithCardProps) {
           </div>
         </div>
         <div className="flex flex-col items-end gap-1">
-          <span
-            className={`text-xs font-medium px-2 py-1 rounded ${
-              similarityPercent >= 70
-                ? "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400"
-                : similarityPercent >= 50
-                ? "bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400"
-                : "bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-400"
-            }`}
-          >
-            {similarityPercent}% match
-          </span>
           {hadith.grading && (
             <span className="text-xs px-2 py-1 bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400 rounded">
               {hadith.grading}
