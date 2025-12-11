@@ -124,7 +124,10 @@ async def lifespan(app: FastAPI):
 
     # Initialize clients
     try:
-        openai_client = OpenAI(api_key=OPENAI_API_KEY)
+        # Create httpx client without proxies to avoid Vercel compatibility issues
+        import httpx
+        http_client = httpx.Client(timeout=60.0)
+        openai_client = OpenAI(api_key=OPENAI_API_KEY, http_client=http_client)
         pinecone_client = Pinecone(api_key=PINECONE_API_KEY)
 
         # Get available indexes
