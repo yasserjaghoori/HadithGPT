@@ -72,9 +72,6 @@ export default function HadithCard({ hadith, rank }: HadithCardProps) {
         {hadith.in_book_reference && (
           <span>• {hadith.in_book_reference}</span>
         )}
-        {hadith.web_reference && (
-          <span>• <a href={hadith.web_reference} target="_blank" rel="noopener noreferrer" className="text-primary-500 hover:underline">View source</a></span>
-        )}
       </div>
     </div>
   );
