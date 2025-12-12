@@ -51,7 +51,7 @@ export default function HadithCard({ hadith, rank }: HadithCardProps) {
       {/* Arabic Text (if available) */}
       {hadith.arabic && (
         <div className="mb-3 p-3 bg-gray-50 dark:bg-gray-900/50 rounded border-r-4 border-primary-500">
-          <p className="text-right text-lg leading-loose font-arabic" dir="rtl">
+          <p className="text-right text-lg leading-loose font-arabic text-gray-900 dark:text-white" dir="rtl">
             {hadith.arabic}
           </p>
         </div>
