@@ -112,7 +112,7 @@ export default function HadithCarousel({ hadiths, title, startRank = 1 }: Hadith
       {/* Keyboard Shortcuts Hint */}
       {hadiths.length > 1 && (
         <div className="text-center text-xs text-gray-400 dark:text-gray-500 italic">
-          Use ← → arrow keys or swipe to navigate
+          Use ← → arrow keys to navigate
         </div>
       )}
     </div>
