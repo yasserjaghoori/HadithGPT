@@ -45,7 +45,7 @@ export default function HadithCarousel({ hadiths, title, startRank = 1 }: Hadith
       )}
 
       {/* Hadith Card */}
-      <div className="relative">
+      <div className="relative group">
         <HadithCard hadith={currentHadith} rank={currentRank} />
 
         {/* Navigation Overlay (only show if more than 1 hadith) */}
@@ -58,7 +58,8 @@ export default function HadithCarousel({ hadiths, title, startRank = 1 }: Hadith
                 className="absolute left-2 top-1/2 -translate-y-1/2
                          bg-white dark:bg-gray-800 border-2 border-primary-500
                          text-primary-500 hover:bg-primary-50 dark:hover:bg-primary-900/20
-                         rounded-full p-3 shadow-lg transition-all hover:scale-110"
+                         rounded-full p-3 shadow-lg transition-all hover:scale-110
+                         opacity-0 group-hover:opacity-100"
                 aria-label="Previous hadith"
               >
                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -74,7 +75,8 @@ export default function HadithCarousel({ hadiths, title, startRank = 1 }: Hadith
                 className="absolute right-2 top-1/2 -translate-y-1/2
                          bg-white dark:bg-gray-800 border-2 border-primary-500
                          text-primary-500 hover:bg-primary-50 dark:hover:bg-primary-900/20
-                         rounded-full p-3 shadow-lg transition-all hover:scale-110"
+                         rounded-full p-3 shadow-lg transition-all hover:scale-110
+                         opacity-0 group-hover:opacity-100"
                 aria-label="Next hadith"
               >
                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
