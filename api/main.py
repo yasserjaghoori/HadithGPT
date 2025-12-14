@@ -390,7 +390,7 @@ If NO hadiths should be clustered, return:
   "standalone_indices": [0, 1, 2, ...]
 }
 
-BE VERY CONSERVATIVE. When in doubt, DO NOT cluster."""
+Be reasonable in clustering - cluster hadiths that clearly describe the same event, but don't force unrelated hadiths together."""
 
         user_prompt = f"""Analyze these {len(hadiths)} hadiths and identify which ones describe the same events:
 
@@ -404,7 +404,7 @@ Remember: Only cluster hadiths that describe the EXACT SAME event, not just simi
                 {"role": "system", "content": system_prompt},
                 {"role": "user", "content": user_prompt}
             ],
-            temperature=0.1,
+            temperature=0.3,
             max_tokens=2000,
             response_format={"type": "json_object"}
         )
