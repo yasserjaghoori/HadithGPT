@@ -6,6 +6,7 @@ import Sidebar from "@/components/Sidebar";
 import ChatMessage from "@/components/ChatMessage";
 import ChatInput from "@/components/ChatInput";
 import ThemeToggle from "@/components/ThemeToggle";
+import WelcomeModal from "@/components/WelcomeModal";
 import { searchHadiths, getCollections } from "@/lib/api";
 import { getCurrentUser } from "@/lib/supabase";
 import type { Message, HadithResult } from "@/types";
@@ -17,9 +18,17 @@ export default function ChatPage() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [currentUser, setCurrentUser] = useState<any>(null);
   const [collections, setCollections] = useState<string[]>([]);
+  const [showWelcomeModal, setShowWelcomeModal] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    // Check if this is the first visit
+    const hasVisited = localStorage.getItem("hadithgpt_visited");
+    if (!hasVisited) {
+      setShowWelcomeModal(true);
+      localStorage.setItem("hadithgpt_visited", "true");
+    }
+
     // Check auth status
     getCurrentUser().then(setCurrentUser);
 
@@ -101,6 +110,12 @@ export default function ChatPage() {
 
   return (
     <div className="flex h-screen bg-gray-50 dark:bg-gray-900">
+      {/* Welcome Modal */}
+      <WelcomeModal
+        isOpen={showWelcomeModal}
+        onClose={() => setShowWelcomeModal(false)}
+      />
+
       {/* Sidebar */}
       <Sidebar
         isOpen={isSidebarOpen}
