@@ -5,10 +5,18 @@ import { useState, useEffect } from "react";
 interface WelcomeModalProps {
   isOpen: boolean;
   onClose: () => void;
+  onExampleClick?: (query: string) => void;
 }
 
-export default function WelcomeModal({ isOpen, onClose }: WelcomeModalProps) {
+export default function WelcomeModal({ isOpen, onClose, onExampleClick }: WelcomeModalProps) {
   if (!isOpen) return null;
+
+  const handleExampleClick = (query: string) => {
+    onClose();
+    if (onExampleClick) {
+      onExampleClick(query);
+    }
+  };
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
@@ -71,26 +79,35 @@ export default function WelcomeModal({ isOpen, onClose }: WelcomeModalProps) {
             </h3>
             <div className="space-y-3">
               <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
-                <p className="text-sm font-medium text-gray-900 dark:text-white mb-2">✨ Ask specific questions:</p>
+                <p className="text-sm font-medium text-gray-900 dark:text-white mb-2">✨ Try these example queries (click to search):</p>
                 <div className="space-y-2">
-                  <div className="bg-white dark:bg-gray-800 p-3 rounded border border-gray-200 dark:border-gray-600">
+                  <button
+                    onClick={() => handleExampleClick("What did the Prophet say about praying alone in a row?")}
+                    className="w-full bg-white dark:bg-gray-800 p-3 rounded border border-gray-200 dark:border-gray-600 hover:border-primary-500 hover:bg-primary-50 dark:hover:bg-primary-900/20 transition-all text-left group"
+                  >
                     <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">Example 1:</p>
-                    <p className="text-sm font-mono text-primary-600 dark:text-primary-400">
+                    <p className="text-sm font-mono text-primary-600 dark:text-primary-400 group-hover:text-primary-700 dark:group-hover:text-primary-300">
                       "What did the Prophet say about praying alone in a row?"
                     </p>
-                  </div>
-                  <div className="bg-white dark:bg-gray-800 p-3 rounded border border-gray-200 dark:border-gray-600">
+                  </button>
+                  <button
+                    onClick={() => handleExampleClick("Show me hadiths about the fly falling in a drink")}
+                    className="w-full bg-white dark:bg-gray-800 p-3 rounded border border-gray-200 dark:border-gray-600 hover:border-primary-500 hover:bg-primary-50 dark:hover:bg-primary-900/20 transition-all text-left group"
+                  >
                     <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">Example 2:</p>
-                    <p className="text-sm font-mono text-primary-600 dark:text-primary-400">
+                    <p className="text-sm font-mono text-primary-600 dark:text-primary-400 group-hover:text-primary-700 dark:group-hover:text-primary-300">
                       "Show me hadiths about the fly falling in a drink"
                     </p>
-                  </div>
-                  <div className="bg-white dark:bg-gray-800 p-3 rounded border border-gray-200 dark:border-gray-600">
+                  </button>
+                  <button
+                    onClick={() => handleExampleClick("What are the Prophet's teachings on charity in Ramadan?")}
+                    className="w-full bg-white dark:bg-gray-800 p-3 rounded border border-gray-200 dark:border-gray-600 hover:border-primary-500 hover:bg-primary-50 dark:hover:bg-primary-900/20 transition-all text-left group"
+                  >
                     <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">Example 3:</p>
-                    <p className="text-sm font-mono text-primary-600 dark:text-primary-400">
+                    <p className="text-sm font-mono text-primary-600 dark:text-primary-400 group-hover:text-primary-700 dark:group-hover:text-primary-300">
                       "What are the Prophet's teachings on charity in Ramadan?"
                     </p>
-                  </div>
+                  </button>
                 </div>
               </div>
 

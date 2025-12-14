@@ -108,12 +108,18 @@ export default function ChatPage() {
     }
   };
 
+  const handleExampleQuery = async (query: string) => {
+    // Automatically submit the example query
+    await handleSendMessage(query, []);
+  };
+
   return (
     <div className="flex h-screen bg-gray-50 dark:bg-gray-900">
       {/* Welcome Modal */}
       <WelcomeModal
         isOpen={showWelcomeModal}
         onClose={() => setShowWelcomeModal(false)}
+        onExampleClick={handleExampleQuery}
       />
 
       {/* Sidebar */}
