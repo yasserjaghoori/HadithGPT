@@ -3,17 +3,16 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { signUp } from "@/lib/supabase";
+import { updatePassword } from "@/lib/supabase";
 import ThemeToggle from "@/components/ThemeToggle";
 
-export default function SignUpPage() {
+export default function ResetPasswordPage() {
   const router = useRouter();
-  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -35,21 +34,15 @@ export default function SignUpPage() {
     setIsLoading(true);
 
     try {
-      const { data, error } = await signUp(email, password);
+      const { error } = await updatePassword(password);
       if (error) {
         setError(error.message);
       } else {
         setSuccess(true);
-        // Check if email confirmation is required
-        if (data?.user && !data.user.confirmed_at) {
-          // Email confirmation required - show message but don't redirect yet
-          setError("");
-        } else {
-          // Auto-confirmed or no email confirmation needed
-          setTimeout(() => {
-            router.push("/chat");
-          }, 2000);
-        }
+        // Redirect to chat after 2 seconds
+        setTimeout(() => {
+          router.push("/chat");
+        }, 2000);
       }
     } catch (err: any) {
       setError(err.message || "An error occurred");
@@ -73,60 +66,27 @@ export default function SignUpPage() {
               Hadith<span className="text-primary-500">GPT</span>
             </h1>
           </Link>
-          <p className="text-gray-600 dark:text-gray-400">Create your account</p>
+          <p className="text-gray-600 dark:text-gray-400">Create a new password</p>
         </div>
 
-        {/* Sign Up Form */}
+        {/* Reset Password Form */}
         <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-8">
           {success ? (
             <div className="text-center py-8">
               <div className="w-16 h-16 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
                 <svg className="w-8 h-8 text-green-600 dark:text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                 </svg>
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">Check your email!</h3>
-              <p className="text-gray-600 dark:text-gray-400 mb-4">
-                We've sent a verification link to <strong>{email}</strong>
-              </p>
-              <p className="text-sm text-gray-500 dark:text-gray-400 mb-6">
-                Click the link in the email to verify your account and start using HadithGPT.
-              </p>
-              <div className="space-y-3">
-                <Link
-                  href="/chat"
-                  className="block w-full px-4 py-2 bg-primary-500 hover:bg-primary-600 text-white rounded-lg font-semibold transition-colors"
-                >
-                  Continue to Chat
-                </Link>
-                <p className="text-xs text-gray-500 dark:text-gray-400">
-                  Didn't receive the email? Check your spam folder
-                </p>
-              </div>
+              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">Password Updated!</h3>
+              <p className="text-gray-600 dark:text-gray-400">Redirecting to chat...</p>
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-6">
-              {/* Email */}
-              <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  Email
-                </label>
-                <input
-                  id="email"
-                  type="email"
-                  required
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  autoComplete="email"
-                  className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-                  placeholder="your@email.com"
-                />
-              </div>
-
               {/* Password */}
               <div>
                 <label htmlFor="password" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  Password
+                  New Password
                 </label>
                 <input
                   id="password"
@@ -146,7 +106,7 @@ export default function SignUpPage() {
               {/* Confirm Password */}
               <div>
                 <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  Confirm Password
+                  Confirm New Password
                 </label>
                 <input
                   id="confirmPassword"
@@ -173,33 +133,9 @@ export default function SignUpPage() {
                 disabled={isLoading}
                 className="w-full px-4 py-2 bg-primary-500 hover:bg-primary-600 text-white rounded-lg font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {isLoading ? "Creating account..." : "Sign Up"}
+                {isLoading ? "Updating password..." : "Update Password"}
               </button>
             </form>
-          )}
-
-          {!success && (
-            <>
-              {/* Sign In Link */}
-              <div className="mt-6 text-center">
-                <p className="text-sm text-gray-600 dark:text-gray-400">
-                  Already have an account?{" "}
-                  <Link href="/auth/login" className="text-primary-500 hover:text-primary-600 font-semibold">
-                    Sign in
-                  </Link>
-                </p>
-              </div>
-
-              {/* Continue as Guest */}
-              <div className="mt-4 text-center">
-                <Link
-                  href="/chat"
-                  className="text-sm text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
-                >
-                  Continue as guest
-                </Link>
-              </div>
-            </>
           )}
         </div>
       </div>
