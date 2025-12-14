@@ -27,7 +27,7 @@ logger = logging.getLogger(__name__)
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "").strip()
 PINECONE_API_KEY = os.getenv("PINECONE_API_KEY", "").strip()
 EMBEDDING_MODEL = "text-embedding-3-large"  # 3072 dimensions
-LLM_MODEL = "gpt-4o-mini"
+LLM_MODEL = "gpt-5-mini"
 TOP_K = 10
 
 # Global clients (initialized on startup)
