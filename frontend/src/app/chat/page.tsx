@@ -140,7 +140,7 @@ export default function ChatPage() {
       />
 
       {/* Main Chat Area */}
-      <div className="flex-1 flex flex-col overflow-hidden">
+      <div className="flex-1 flex flex-col">
         {/* Header */}
         <header className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-4 py-3 flex items-center justify-between">
           <div className="flex items-center gap-3">
@@ -188,7 +188,7 @@ export default function ChatPage() {
               ? 'opacity-0 pointer-events-none'
               : 'opacity-100'
           }`}>
-            <div className="w-full max-w-3xl mx-auto space-y-8">
+            <div className="w-full max-w-3xl space-y-8">
               {/* Welcome Title */}
               <div className="text-center space-y-2">
                 <h2 className="text-4xl font-bold text-gray-900 dark:text-white">

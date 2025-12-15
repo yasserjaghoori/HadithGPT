@@ -93,38 +93,3 @@ textarea {
 body {
   overflow-x: hidden;
 }
-
-/* Custom scrollbar styling to be less intrusive and overlay (not take up space) */
-* {
-  scrollbar-gutter: stable;
-}
-
-::-webkit-scrollbar {
-  width: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #d1d5db;
-  border-radius: 4px;
-  border: 2px solid transparent;
-  background-clip: padding-box;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #9ca3af;
-  background-clip: padding-box;
-}
-
-.dark ::-webkit-scrollbar-thumb {
-  background: #374151;
-  background-clip: padding-box;
-}
-
-.dark ::-webkit-scrollbar-thumb:hover {
-  background: #4b5563;
-  background-clip: padding-box;
-}
