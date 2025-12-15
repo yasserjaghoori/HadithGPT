@@ -62,7 +62,7 @@ export default function ChatInput({ onSend, isLoading, collections }: ChatInputP
   };
 
   return (
-    <div className="border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 px-4 py-4">
+    <div className="px-4 py-4">
       <div className="max-w-4xl mx-auto">
         {/* Collection Filter */}
         {collections.length > 0 && (
