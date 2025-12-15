@@ -180,29 +180,77 @@ export default function ChatPage() {
           </div>
         </header>
 
-        {/* Messages */}
-        <div className="flex-1 overflow-y-auto px-4 py-6">
-          <div className="max-w-4xl mx-auto space-y-6">
-            {messages.map((message) => (
-              <ChatMessage key={message.id} message={message} />
-            ))}
-            {isLoading && (
-              <div className="flex items-center gap-2 text-gray-500 dark:text-gray-400">
-                <div className="w-2 h-2 bg-primary-500 rounded-full animate-bounce" style={{ animationDelay: "0ms" }} />
-                <div className="w-2 h-2 bg-primary-500 rounded-full animate-bounce" style={{ animationDelay: "150ms" }} />
-                <div className="w-2 h-2 bg-primary-500 rounded-full animate-bounce" style={{ animationDelay: "300ms" }} />
+        {/* Check if conversation has started (more than just the welcome message) */}
+        {messages.length <= 1 ? (
+          /* Centered initial view */
+          <div className="flex-1 flex flex-col items-center justify-center px-4">
+            <div className="w-full max-w-3xl space-y-8">
+              {/* Welcome Title */}
+              <div className="text-center space-y-2">
+                <h2 className="text-4xl font-bold text-gray-900 dark:text-white">
+                  Hadith<span className="text-primary-500">GPT</span>
+                </h2>
+                <p className="text-gray-600 dark:text-gray-400">
+                  Ask me anything about the Hadiths
+                </p>
               </div>
-            )}
-            <div ref={messagesEndRef} />
-          </div>
-        </div>
 
-        {/* Input */}
-        <ChatInput
-          onSend={handleSendMessage}
-          isLoading={isLoading}
-          collections={collections}
-        />
+              {/* Centered Input */}
+              <ChatInput
+                onSend={handleSendMessage}
+                isLoading={isLoading}
+                collections={collections}
+              />
+
+              {/* Optional: Quick suggestions */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-8">
+                <button
+                  onClick={() => handleExampleQuery("What did the Prophet say about prayer?")}
+                  className="p-4 text-left bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg hover:border-primary-500 hover:bg-primary-50 dark:hover:bg-primary-900/20 transition-all group"
+                >
+                  <p className="text-sm font-medium text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400">
+                    What did the Prophet say about prayer?
+                  </p>
+                </button>
+                <button
+                  onClick={() => handleExampleQuery("Show me hadiths about charity")}
+                  className="p-4 text-left bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg hover:border-primary-500 hover:bg-primary-50 dark:hover:bg-primary-900/20 transition-all group"
+                >
+                  <p className="text-sm font-medium text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400">
+                    Show me hadiths about charity
+                  </p>
+                </button>
+              </div>
+            </div>
+          </div>
+        ) : (
+          /* Standard chat view with messages at top and input at bottom */
+          <>
+            {/* Messages */}
+            <div className="flex-1 overflow-y-auto px-4 py-6">
+              <div className="max-w-4xl mx-auto space-y-6">
+                {messages.map((message) => (
+                  <ChatMessage key={message.id} message={message} />
+                ))}
+                {isLoading && (
+                  <div className="flex items-center gap-2 text-gray-500 dark:text-gray-400">
+                    <div className="w-2 h-2 bg-primary-500 rounded-full animate-bounce" style={{ animationDelay: "0ms" }} />
+                    <div className="w-2 h-2 bg-primary-500 rounded-full animate-bounce" style={{ animationDelay: "150ms" }} />
+                    <div className="w-2 h-2 bg-primary-500 rounded-full animate-bounce" style={{ animationDelay: "300ms" }} />
+                  </div>
+                )}
+                <div ref={messagesEndRef} />
+              </div>
+            </div>
+
+            {/* Input */}
+            <ChatInput
+              onSend={handleSendMessage}
+              isLoading={isLoading}
+              collections={collections}
+            />
+          </>
+        )}
       </div>
     </div>
   );
