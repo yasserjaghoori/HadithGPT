@@ -113,7 +113,7 @@ export default function ChatInput({ onSend, isLoading, collections }: ChatInputP
         {/* Input Form */}
         <form onSubmit={handleSubmit} className="relative">
           <textarea
-            ref={textareaRef}
+            // ref={textareaRef}
             value={input}
             onChange={handleInputChange}
             onKeyDown={handleKeyDown}
