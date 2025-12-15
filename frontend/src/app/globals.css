@@ -60,3 +60,15 @@
 .font-arabic {
   font-family: var(--font-arabic), serif;
 }
+
+/* Hide scrollbar for chat input textarea */
+textarea::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  display: none;
+}
+
+textarea {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
