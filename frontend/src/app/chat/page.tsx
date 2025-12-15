@@ -181,9 +181,13 @@ export default function ChatPage() {
         </header>
 
         {/* Check if conversation has started (more than just the welcome message) */}
-        {messages.length <= 1 ? (
-          /* Centered initial view */
-          <div className="flex-1 flex flex-col items-center justify-center px-4">
+        <div className="flex-1 flex flex-col relative">
+          {/* Centered initial view - fades out when conversation starts */}
+          <div className={`absolute inset-0 flex flex-col items-center justify-center px-4 transition-all duration-500 ${
+            messages.length > 1
+              ? 'opacity-0 pointer-events-none'
+              : 'opacity-100'
+          }`}>
             <div className="w-full max-w-3xl space-y-8">
               {/* Welcome Title */}
               <div className="text-center space-y-2">
@@ -196,11 +200,13 @@ export default function ChatPage() {
               </div>
 
               {/* Centered Input */}
-              <ChatInput
-                onSend={handleSendMessage}
-                isLoading={isLoading}
-                collections={collections}
-              />
+              {messages.length <= 1 && (
+                <ChatInput
+                  onSend={handleSendMessage}
+                  isLoading={isLoading}
+                  collections={collections}
+                />
+              )}
 
               {/* Optional: Quick suggestions */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-8">
@@ -223,14 +229,24 @@ export default function ChatPage() {
               </div>
             </div>
           </div>
-        ) : (
-          /* Standard chat view with messages at top and input at bottom */
-          <>
+
+          {/* Standard chat view - fades in when conversation starts */}
+          <div className={`flex flex-col flex-1 transition-all duration-500 ${
+            messages.length > 1
+              ? 'opacity-100'
+              : 'opacity-0 pointer-events-none'
+          }`}>
             {/* Messages */}
             <div className="flex-1 overflow-y-auto px-4 py-6">
               <div className="max-w-4xl mx-auto space-y-6">
-                {messages.map((message) => (
-                  <ChatMessage key={message.id} message={message} />
+                {messages.map((message, index) => (
+                  <div
+                    key={message.id}
+                    className="animate-fadeIn"
+                    style={{ animationDelay: `${index * 50}ms` }}
+                  >
+                    <ChatMessage message={message} />
+                  </div>
                 ))}
                 {isLoading && (
                   <div className="flex items-center gap-2 text-gray-500 dark:text-gray-400">
@@ -244,13 +260,15 @@ export default function ChatPage() {
             </div>
 
             {/* Input */}
-            <ChatInput
-              onSend={handleSendMessage}
-              isLoading={isLoading}
-              collections={collections}
-            />
-          </>
-        )}
+            {messages.length > 1 && (
+              <ChatInput
+                onSend={handleSendMessage}
+                isLoading={isLoading}
+                collections={collections}
+              />
+            )}
+          </div>
+        </div>
       </div>
     </div>
   );
