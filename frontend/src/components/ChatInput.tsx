@@ -119,7 +119,7 @@ export default function ChatInput({ onSend, isLoading, collections }: ChatInputP
             onKeyDown={handleKeyDown}
             placeholder="Ask about any Hadith... (e.g., 'What did the Prophet say about prayer?')"
             disabled={isLoading}
-            className="w-full resize-none rounded-3xl bg-white dark:bg-gray-800 shadow-lg px-5 py-4 pr-14 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:border-primary-500 dark:focus:border-primary-500 disabled:opacity-50 disabled:cursor-not-allowed max-h-32 overflow-y-auto transition-all"
+            className="w-full resize-none rounded-3xl border-none outline-none bg-white dark:bg-gray-800 shadow-lg px-5 py-4 pr-14 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:border-primary-500 dark:focus:border-primary-500 disabled:opacity-50 disabled:cursor-not-allowed max-h-32 overflow-y-auto transition-all"
             rows={1}
           />
           <button
