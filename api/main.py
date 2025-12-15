@@ -336,6 +336,7 @@ def cluster_hadiths(hadiths: List[Dict]) -> Optional[List[Dict]]:
             summary = f"""Hadith {i}:
 Collection: {hadith['collection']}
 Reference: {hadith['collection_reference']}
+Grading: {hadith.get('grading', 'Unknown')}
 Narrator: {hadith['narrator']}
 Text: {hadith['text'][:500]}..."""  # Limit text length
             hadith_summaries.append(summary)
@@ -365,7 +366,11 @@ STRICT CLUSTERING RULES:
    ✓ CLUSTER: "The fly falling in the drink incident" (specific event)
    ✗ DO NOT CLUSTER: "Hadiths about insects in food" (general topic)
 
-4. For each cluster, pick the PRIMARY hadith (best chain, most detail)
+4. For each cluster, ORDER the hadith_indices by authenticity priority:
+   - Sahih (authentic) hadiths FIRST
+   - Hasan (good) hadiths SECOND
+   - Daif (weak) hadiths LAST
+   - The PRIMARY hadith should be the most authentic one with the best chain/most detail
 
 5. THERE SHOULD NEVER BE DUPLICATE HADITHS ACROSS CLUSTERS!!!!!!!!!!
 
@@ -378,11 +383,13 @@ Return your analysis as a JSON object:
       "event_title": "Specific event title (include people/place)",
       "primary_index": 0,
       "hadith_indices": [0, 3, 5],
-      "reasoning": "Why these describe the EXACT same event"
+      "reasoning": "Why these describe the EXACT same event. Note: Ordered by authenticity (Sahih first, then Hasan, then Daif)"
     }
   ],
   "standalone_indices": [1, 2, 4]
 }
+
+IMPORTANT: In the hadith_indices array, list authentic (Sahih) hadiths FIRST, followed by good (Hasan), then weak (Daif).
 
 If NO hadiths should be clustered, return:
 {
