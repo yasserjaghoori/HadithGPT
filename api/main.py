@@ -2,7 +2,13 @@
 HadithGPT API - FastAPI Backend
 Production-ready API for hadith search with conversation memory support
 """
+<<<<<<< HEAD
 ''' test '''
+=======
+
+# Test branch testing
+
+>>>>>>> 8a2f546 (Update to check branch)
 import os
 import logging
 from datetime import datetime
