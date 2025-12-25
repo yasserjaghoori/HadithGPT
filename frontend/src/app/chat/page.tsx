@@ -263,10 +263,11 @@ export default function ChatPage() {
                   </div>
                 ))}
                 {isLoading && (
-                  <div className="flex items-center gap-2 text-gray-500 dark:text-gray-400">
-                    <div className="w-2 h-2 bg-primary-500 rounded-full animate-bounce" style={{ animationDelay: "0ms" }} />
-                    <div className="w-2 h-2 bg-primary-500 rounded-full animate-bounce" style={{ animationDelay: "150ms" }} />
-                    <div className="w-2 h-2 bg-primary-500 rounded-full animate-bounce" style={{ animationDelay: "300ms" }} />
+                  <div className="flex flex-col gap-2">
+                    <div className="w-64 h-1.5 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                      <div className="h-full w-1/3 bg-gradient-to-r from-primary-400 via-primary-500 to-primary-600 rounded-full animate-progress"></div>
+                    </div>
+                    <p className="text-sm text-gray-500 dark:text-gray-400">Searching hadiths...</p>
                   </div>
                 )}
                 <div ref={messagesEndRef} />

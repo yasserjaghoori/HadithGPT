@@ -89,6 +89,20 @@ textarea {
   animation: fadeIn 0.3s ease-out forwards;
 }
 
+/* Progress bar animation */
+@keyframes progressIndeterminate {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(400%);
+  }
+}
+
+.animate-progress {
+  animation: progressIndeterminate 1.5s ease-in-out infinite;
+}
+
 /* Hide scrollbar on main page for better centering */
 body {
   overflow-x: hidden;
