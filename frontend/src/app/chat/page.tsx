@@ -11,6 +11,20 @@ import { searchHadiths, getCollections } from "@/lib/api";
 import { getCurrentUser } from "@/lib/supabase";
 import type { Message, HadithResult } from "@/types";
 
+// Example queries pool
+const EXAMPLE_QUERIES = [
+  "What did the Prophet say about prayer?",
+  "Show me hadiths about charity",
+  "Tell me about fasting in Ramadan",
+  "What are the teachings on kindness to parents?",
+  "Show me hadiths about seeking knowledge",
+  "What did the Prophet say about honesty?",
+  "Tell me about the importance of patience",
+  "Show me hadiths about good character",
+  "What are the teachings on treating neighbors well?",
+  "Tell me about the rewards of reciting Quran",
+];
+
 export default function ChatPage() {
   const router = useRouter();
   const [messages, setMessages] = useState<Message[]>([]);
@@ -19,6 +33,7 @@ export default function ChatPage() {
   const [currentUser, setCurrentUser] = useState<any>(null);
   const [collections, setCollections] = useState<string[]>([]);
   const [showWelcomeModal, setShowWelcomeModal] = useState(false);
+  const [randomExamples, setRandomExamples] = useState<string[]>([]);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -28,6 +43,10 @@ export default function ChatPage() {
       setShowWelcomeModal(true);
       localStorage.setItem("hadithgpt_visited", "true");
     }
+
+    // Select 4 random example queries
+    const shuffled = [...EXAMPLE_QUERIES].sort(() => 0.5 - Math.random());
+    setRandomExamples(shuffled.slice(0, 4));
 
     // Check auth status
     getCurrentUser().then(setCurrentUser);
@@ -210,22 +229,17 @@ export default function ChatPage() {
 
               {/* Optional: Quick suggestions */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-8">
-                <button
-                  onClick={() => handleExampleQuery("What did the Prophet say about prayer?")}
-                  className="p-4 text-left bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg hover:border-primary-500 hover:bg-primary-50 dark:hover:bg-primary-900/20 transition-all group"
-                >
-                  <p className="text-sm font-medium text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400">
-                    What did the Prophet say about prayer?
-                  </p>
-                </button>
-                <button
-                  onClick={() => handleExampleQuery("Show me hadiths about charity")}
-                  className="p-4 text-left bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg hover:border-primary-500 hover:bg-primary-50 dark:hover:bg-primary-900/20 transition-all group"
-                >
-                  <p className="text-sm font-medium text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400">
-                    Show me hadiths about charity
-                  </p>
-                </button>
+                {randomExamples.map((query, index) => (
+                  <button
+                    key={index}
+                    onClick={() => handleExampleQuery(query)}
+                    className="p-4 text-left bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg hover:border-primary-500 hover:bg-primary-50 dark:hover:bg-primary-900/20 transition-all group"
+                  >
+                    <p className="text-sm font-medium text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400">
+                      {query}
+                    </p>
+                  </button>
+                ))}
               </div>
             </div>
           </div>

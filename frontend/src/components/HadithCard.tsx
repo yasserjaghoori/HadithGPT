@@ -26,7 +26,6 @@ export default function HadithCard({ hadith, rank }: HadithCardProps) {
     if (hadith.grading) formatted += `Grading: ${hadith.grading}\n`;
     formatted += `\n${hadith.text}\n`;
     if (hadith.arabic) formatted += `\n${hadith.arabic}\n`;
-    if (hadith.narrator) formatted += `\nNarrator: ${hadith.narrator}\n`;
     if (hadith.in_book_reference) formatted += `\nReference: ${hadith.in_book_reference}`;
     if (hadith.web_reference) formatted += `\nSource: ${hadith.web_reference}`;
     return formatted;
@@ -105,13 +104,6 @@ export default function HadithCard({ hadith, rank }: HadithCardProps) {
           <p className="text-right text-lg leading-loose font-arabic text-gray-900 dark:text-white" dir="rtl">
             {hadith.arabic}
           </p>
-        </div>
-      )}
-
-      {/* Narrator */}
-      {hadith.narrator && (
-        <div className="text-sm text-gray-600 dark:text-gray-400 mb-2">
-          <span className="font-medium">Narrator:</span> {hadith.narrator}
         </div>
       )}
 
