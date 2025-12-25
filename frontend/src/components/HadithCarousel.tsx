@@ -126,12 +126,6 @@ export default function HadithCarousel({ hadiths, title, startRank = 1 }: Hadith
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
               </svg>
             </button>
-
-            {/* Keyboard Shortcuts Hint */}
-            <span className="text-xs text-gray-400 dark:text-gray-500 italic">
-              Use ← → arrow keys to navigate
-            </span>
-
             {/* Next Button */}
             <button
               onClick={goToNext}
