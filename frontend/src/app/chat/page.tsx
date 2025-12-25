@@ -29,6 +29,8 @@ export default function ChatPage() {
   const router = useRouter();
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [loadingProgress, setLoadingProgress] = useState(0);
+  const [loadingStage, setLoadingStage] = useState("");
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [currentUser, setCurrentUser] = useState<any>(null);
   const [collections, setCollections] = useState<string[]>([]);
@@ -88,15 +90,23 @@ export default function ChatPage() {
     };
     setMessages((prev) => [...prev, userMessage]);
     setIsLoading(true);
+    setLoadingProgress(0);
+    setLoadingStage("Starting search...");
 
     try {
-      // Call API (let backend LLM determine result count)
-      const response = await searchHadiths({
-        query,
-        collections: selectedCollections.length > 0 ? selectedCollections : undefined,
-        user_id: currentUser?.id,
-        // No top_k - let LLM decide based on query intent
-      });
+      // Call API with progress tracking
+      const response = await searchHadiths(
+        {
+          query,
+          collections: selectedCollections.length > 0 ? selectedCollections : undefined,
+          user_id: currentUser?.id,
+          // No top_k - let LLM decide based on query intent
+        },
+        (progress, stage) => {
+          setLoadingProgress(progress);
+          setLoadingStage(stage);
+        }
+      );
 
       // Add assistant response
       const assistantMessage: Message = {
@@ -264,10 +274,16 @@ export default function ChatPage() {
                 ))}
                 {isLoading && (
                   <div className="flex flex-col gap-2">
-                    <div className="w-64 h-1.5 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
-                      <div className="h-full w-1/3 bg-gradient-to-r from-primary-400 via-primary-500 to-primary-600 rounded-full animate-progress"></div>
+                    <div className="w-80 h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                      <div
+                        className="h-full bg-gradient-to-r from-primary-400 via-primary-500 to-primary-600 rounded-full transition-all duration-300 ease-out"
+                        style={{ width: `${loadingProgress}%` }}
+                      ></div>
                     </div>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">Searching hadiths...</p>
+                    <div className="flex items-center justify-between w-80 text-xs">
+                      <p className="text-gray-600 dark:text-gray-300 font-medium">{loadingStage}</p>
+                      <p className="text-gray-500 dark:text-gray-400">{loadingProgress}%</p>
+                    </div>
                   </div>
                 )}
                 <div ref={messagesEndRef} />
