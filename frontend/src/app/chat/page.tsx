@@ -81,6 +81,11 @@ export default function ChatPage() {
   const handleSendMessage = async (query: string, selectedCollections: string[]) => {
     if (!query.trim()) return;
 
+    // Scroll to bottom when sending a message
+    setTimeout(() => {
+      messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    }, 100);
+
     // Add user message
     const userMessage: Message = {
       id: Date.now().toString(),
@@ -169,7 +174,7 @@ export default function ChatPage() {
       />
 
       {/* Main Chat Area */}
-      <div className="flex-1 flex flex-col">
+      <div className="flex-1 flex flex-col relative">
         {/* Header */}
         <header className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-4 py-3 flex items-center justify-between">
           <div className="flex items-center gap-3">
@@ -260,8 +265,8 @@ export default function ChatPage() {
               ? 'opacity-100'
               : 'opacity-0 pointer-events-none'
           }`}>
-            {/* Messages */}
-            <div className="flex-1 overflow-y-auto px-4 py-6">
+            {/* Messages - with bottom padding for fixed input */}
+            <div className="flex-1 overflow-y-auto px-4 py-6 pb-32">
               <div className="max-w-4xl mx-auto space-y-6">
                 {messages.map((message, index) => (
                   <div
@@ -290,13 +295,15 @@ export default function ChatPage() {
               </div>
             </div>
 
-            {/* Input */}
+            {/* Fixed Input at Bottom */}
             {messages.length > 1 && (
-              <ChatInput
-                onSend={handleSendMessage}
-                isLoading={isLoading}
-                collections={collections}
-              />
+              <div className="absolute bottom-0 left-0 right-0 bg-gray-50 dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700">
+                <ChatInput
+                  onSend={handleSendMessage}
+                  isLoading={isLoading}
+                  collections={collections}
+                />
+              </div>
             )}
           </div>
         </div>
