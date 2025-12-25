@@ -296,6 +296,9 @@ If you see red underlines in VSCode for imports:
 2. Type "Python: Select Interpreter"
 3. Choose the Python interpreter where packages are installed
 
+### Notes on Git/GitHub: 
+https://docs.google.com/document/d/1z92pn1YjdGyuWs3j3WZZJBX4JxNrAGJF6LNLqGpze1A/edit?usp=sharing
+
 ## 📝 License
 
 This project is open source and available under the MIT License.
