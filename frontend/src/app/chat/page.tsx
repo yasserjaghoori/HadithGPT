@@ -266,7 +266,7 @@ export default function ChatPage() {
               : 'opacity-0 pointer-events-none'
           }`}>
             {/* Messages - with bottom padding for fixed input */}
-            <div className="flex-1 overflow-y-auto px-4 py-6 pb-32">
+            <div className="flex-1 overflow-y-auto px-4 py-6 pb-40">
               <div className="max-w-4xl mx-auto space-y-6">
                 {messages.map((message, index) => (
                   <div
@@ -294,18 +294,18 @@ export default function ChatPage() {
                 <div ref={messagesEndRef} />
               </div>
             </div>
-
-            {/* Fixed Input at Bottom */}
-            {messages.length > 1 && (
-              <div className="absolute bottom-0 left-0 right-0 bg-gray-50 dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700">
-                <ChatInput
-                  onSend={handleSendMessage}
-                  isLoading={isLoading}
-                  collections={collections}
-                />
-              </div>
-            )}
           </div>
+
+          {/* Fixed Input at Bottom - Always visible when in chat mode */}
+          {messages.length > 1 && (
+            <div className={`fixed bottom-0 ${isSidebarOpen ? 'left-64' : 'left-0'} right-0 bg-gray-50 dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700 z-50 transition-all duration-300`}>
+              <ChatInput
+                onSend={handleSendMessage}
+                isLoading={isLoading}
+                collections={collections}
+              />
+            </div>
+          )}
         </div>
       </div>
     </div>
